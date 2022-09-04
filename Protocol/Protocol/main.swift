@@ -38,13 +38,24 @@ class Phone: MobileStorage {
     }
     
     func save(_ mobile: Mobile) throws -> Mobile {
-        mobileStorage.insert(mobile)
+        
+        do {
+            try mobileStorage.insert(mobile)
+        }catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
         return mobile
     }
     
     func delete(_ product: Mobile) throws {
-        guard let delete = findByImei(product.imei) else {return}
-        mobileStorage.remove(delete)
+        if let delete = findByImei(product.imei){
+            do{
+              try mobileStorage.remove(delete)
+            }catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func exists(_ product: Mobile) -> Bool {
