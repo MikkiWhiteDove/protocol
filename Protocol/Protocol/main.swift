@@ -50,9 +50,9 @@ class Phone: MobileStorage {
     func save(_ mobile: Mobile) throws -> Mobile {
         do {
             try mobileStorage.insert(mobile)
-        }catch let error as NSError {
+        }catch let error as NSError, MobileStorageError.saveError {
             print(error.localizedDescription)
-            MobileStorageError.saveError
+            throw error
         }
         
         return mobile
@@ -62,9 +62,9 @@ class Phone: MobileStorage {
         if let delete = findByImei(product.imei){
             do{
               try mobileStorage.remove(delete)
-            }catch let error as NSError {
+            }catch let error as NSError, MobileStorageError.deleteError {
                 print(error.localizedDescription)
-                MobileStorageError.deleteError
+                throw error
             }
         }
     }
