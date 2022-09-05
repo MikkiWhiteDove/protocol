@@ -26,11 +26,11 @@ let model: String
 
 class Phone: MobileStorage {
     
-//    enum MobileStorageError {
-//        case saveError
-//         
-//        case deleteError
-//    }
+    enum MobileStorageError {
+        case saveError
+         
+        case deleteError
+    }
     
     var mobileStorage = Set<Mobile>()
     
@@ -52,7 +52,7 @@ class Phone: MobileStorage {
             try mobileStorage.insert(mobile)
         }catch let error as NSError {
             print(error.localizedDescription)
-            throw error
+            MobileStorageError.saveError
         }
         
         return mobile
@@ -64,7 +64,7 @@ class Phone: MobileStorage {
               try mobileStorage.remove(delete)
             }catch let error as NSError {
                 print(error.localizedDescription)
-                throw error
+                MobileStorageError.deleteError
             }
         }
     }
