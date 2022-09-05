@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MobileStorage {
 func getAll() -> Set<Mobile>
@@ -38,11 +39,14 @@ class Phone: MobileStorage {
     }
     
     func save(_ mobile: Mobile) throws -> Mobile {
-        
         do {
             try mobileStorage.insert(mobile)
         }catch let error as NSError {
             print(error.localizedDescription)
+            let alert = UIAlertController(title: "Save error", message: "\(error.localizedDescription)", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
         
         return mobile
@@ -54,6 +58,10 @@ class Phone: MobileStorage {
               try mobileStorage.remove(delete)
             }catch let error as NSError {
                 print(error.localizedDescription)
+                let alert = UIAlertController(title: "Delete error", message: "\(error.localizedDescription)", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
